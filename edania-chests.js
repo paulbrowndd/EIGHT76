@@ -341,39 +341,51 @@
     });
   }
 
+  function mount(el) {
+    panelEl = el;
+    loadData();
+    bindEvents();
+    window.addEventListener("message", (e) => {
+      const msg = e.data;
+      if (!msg || typeof msg !== "object") return;
+      if (msg.type === "frag-trace-done") {
+        const num = Number(msg.num);
+        if (!Number.isFinite(num)) return;
+        applyTraceDone(num, !!msg.done);
+      } else if (msg.type === "frag-relic-done") {
+        const num = Number(msg.num);
+        if (!Number.isFinite(num)) return;
+        applyLegacyDone(num, !!msg.done);
+      } else if (msg.type === "frag-trace-reset") {
+        data.forEach((item) => {
+          item.trace = false;
+        });
+        persist();
+        render();
+      } else if (msg.type === "frag-relic-reset") {
+        data.forEach((item) => {
+          item.legacy = false;
+        });
+        persist();
+        render();
+      }
+    });
+    render();
+  }
+
   window.FRAGEdaniaChests = {
-    mount(el) {
-      panelEl = el;
-      loadData();
-      bindEvents();
-      window.addEventListener("message", (e) => {
-        const msg = e.data;
-        if (!msg || typeof msg !== "object") return;
-        if (msg.type === "frag-trace-done") {
-          const num = Number(msg.num);
-          if (!Number.isFinite(num)) return;
-          applyTraceDone(num, !!msg.done);
-        } else if (msg.type === "frag-relic-done") {
-          const num = Number(msg.num);
-          if (!Number.isFinite(num)) return;
-          applyLegacyDone(num, !!msg.done);
-        } else if (msg.type === "frag-trace-reset") {
-          data.forEach((item) => {
-            item.trace = false;
-          });
-          persist();
-          render();
-        } else if (msg.type === "frag-relic-reset") {
-          data.forEach((item) => {
-            item.legacy = false;
-          });
-          persist();
-          render();
-        }
-      });
-    },
-    render() {
-      render();
-    },
+    mount,
+    render,
   };
+
+  function boot() {
+    const el = document.getElementById("edania-chests-panel");
+    if (el) mount(el);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
