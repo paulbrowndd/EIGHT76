@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FRAG · Node War Stats</title>
-    <link rel="stylesheet" href="styles.css?v=20261004a" />
+    <title>Edania II · Agris Chest Tracker</title>
+    <link rel="stylesheet" href="styles.css?v=20261114a" />
   </head>
   <body>
     <div class="bg-pattern" aria-hidden="true"></div>
@@ -15,218 +15,14 @@
         <div class="brand">
           <div class="led-bar led-bar--brand" aria-hidden="true"></div>
           <div class="brand-text">
-            <p class="brand-tag"><span class="brand-tag-led" aria-hidden="true"></span>FRAG</p>
-            <h1>Node War Stats</h1>
-            <p class="meta" id="header-meta">Node war result</p>
-            <button type="button" id="site-auth-lock" class="site-auth-lock" hidden>Lock stats</button>
+            <p class="brand-tag"><span class="brand-tag-led" aria-hidden="true"></span>Edania II</p>
+            <h1>Agris Chest Tracker</h1>
+            <p class="meta">Tachyon Traces &amp; Legacy · progress saved on this device</p>
           </div>
         </div>
       </header>
 
-      <div id="site-auth-gate" class="site-auth-gate" hidden>
-        <div class="site-auth-card" role="dialog" aria-modal="true" aria-labelledby="site-auth-title">
-          <div class="led-bar led-bar--brand site-auth-led" aria-hidden="true"></div>
-          <h2 id="site-auth-title" class="site-auth-title">Members only</h2>
-          <p class="site-auth-sub">Enter the guild password to view node war stats and rankings.</p>
-          <form id="site-auth-form" class="site-auth-form">
-            <label class="site-auth-label" for="site-auth-input">Password</label>
-            <input
-              id="site-auth-input"
-              class="site-auth-input"
-              type="password"
-              autocomplete="current-password"
-              required
-            />
-            <label class="site-auth-remember">
-              <input id="site-auth-remember" type="checkbox" />
-              Remember on this device
-            </label>
-            <p id="site-auth-error" class="site-auth-error" hidden>Incorrect password. Try again.</p>
-            <div class="site-auth-actions">
-              <button type="submit" class="site-auth-btn site-auth-btn--primary">Unlock stats</button>
-              <button type="button" class="site-auth-btn" id="site-auth-back">Back to chest tracker</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <section class="panel panel--controls" aria-label="View and period">
-        <div class="tabs" role="tablist" aria-label="View mode">
-          <button type="button" class="tab tab--active" data-view="daily" role="tab" aria-selected="true">
-            Daily
-          </button>
-          <button type="button" class="tab" data-view="weekly" role="tab" aria-selected="false">
-            Weekly
-          </button>
-          <button type="button" class="tab" data-view="monthly" role="tab" aria-selected="false">
-            Monthly
-          </button>
-          <button type="button" class="tab" data-view="weekly-analysis" role="tab" aria-selected="false">
-            Weekly analysis
-          </button>
-          <button type="button" class="tab" data-view="monthly-analysis" role="tab" aria-selected="false">
-            Monthly analysis
-          </button>
-          <button type="button" class="tab" data-view="lifetime" role="tab" aria-selected="false">
-            Lifetime
-          </button>
-          <button type="button" class="tab" data-view="attendance" role="tab" aria-selected="false">
-            Attendance
-          </button>
-          <button type="button" class="tab" data-view="siege-tickets" role="tab" aria-selected="false">
-            Weekly siege tickets
-          </button>
-          <button type="button" class="tab" data-view="class-rankings" role="tab" aria-selected="false">
-            FRAG Class Rankings
-          </button>
-          <button type="button" class="tab" data-view="edania-chests" role="tab" aria-selected="false">
-            Edania II Chests
-          </button>
-          <button type="button" class="tab" data-view="bingo-book" role="tab" aria-selected="false">
-            Bingo Book
-          </button>
-        </div>
-
-        <div id="scope-row" class="scope-row">
-          <div id="date-field" class="field">
-            <label for="date-select">War date</label>
-            <select id="date-select"></select>
-          </div>
-          <div id="week-field" class="field" hidden>
-            <label for="week-select">Week (Sun–Sat)</label>
-            <select id="week-select"></select>
-          </div>
-          <div id="month-field" class="field" hidden>
-            <label for="month-select">Month</label>
-            <select id="month-select"></select>
-          </div>
-        </div>
-      </section>
-
-      <section id="toolbar-panel" class="panel panel--toolbar" aria-label="Filters">
-        <label class="search" for="search">
-          <span class="visually-hidden">Filter by family name</span>
-          <input
-            type="search"
-            id="search"
-            placeholder="Search family name…"
-            autocomplete="off"
-          />
-        </label>
-        <span id="count" class="count"></span>
-        <div id="team-filters" class="team-filters" role="group" aria-label="Filter by team"></div>
-        <div id="ball-role-filters" class="team-filters ball-role-filters" role="group" aria-label="Filter by Role in Ball"></div>
-      </section>
-
-      <div id="attendance-panel" class="attendance-panel panel" hidden></div>
-
-      <section id="mvp-section" class="mvp-section panel" hidden aria-label="Monthly MVP awards">
-        <div class="mvp-dual">
-          <article class="mvp-pane mvp-pane--combat" aria-labelledby="mvp-heading">
-            <div class="mvp-head">
-              <h2 id="mvp-heading" class="mvp-title">Monthly MVP</h2>
-            </div>
-            <div class="mvp-winner" id="mvp-winner"></div>
-            <dl id="mvp-breakdown" class="mvp-breakdown"></dl>
-            <ol id="mvp-leaderboard" class="mvp-leaderboard" aria-label="MVP score rankings"></ol>
-          </article>
-
-          <article class="mvp-pane mvp-pane--healer" aria-labelledby="healer-mvp-heading">
-            <div class="mvp-head">
-              <h2 id="healer-mvp-heading" class="mvp-title">Healer MVP</h2>
-            </div>
-            <div class="mvp-winner" id="healer-mvp-winner"></div>
-            <dl id="healer-mvp-breakdown" class="mvp-breakdown"></dl>
-            <ol id="healer-mvp-leaderboard" class="mvp-leaderboard" aria-label="Healer MVP score rankings"></ol>
-          </article>
-        </div>
-      </section>
-
-      <section id="war-analysis-panel" class="war-analysis-section panel" hidden aria-labelledby="war-analysis-heading">
-        <div class="mvp-head war-analysis-head">
-          <div class="war-analysis-head-text">
-            <h2 id="war-analysis-heading" class="mvp-title">War performance analysis</h2>
-            <p id="war-analysis-sub" class="mvp-sub">
-              MVP-weighted scores from period totals. Top half = high performers; bottom half = low performers.
-            </p>
-          </div>
-          <button type="button" id="war-analysis-download" class="war-analysis-download">
-            Download PDF
-          </button>
-        </div>
-        <dl id="war-analysis-formula" class="mvp-breakdown"></dl>
-        <p id="war-analysis-summary" class="war-analysis-summary"></p>
-        <p id="war-analysis-prior-mvps" class="war-analysis-prior-mvps" hidden></p>
-        <div id="war-analysis-no-shows" class="war-analysis-no-shows" hidden></div>
-      </section>
-
-      <div id="siege-tickets-panel" class="siege-tickets-panel panel" hidden aria-label="Weekly siege tickets"></div>
-
-      <section id="class-rankings-panel" class="class-rankings-panel panel" hidden aria-label="FRAG Class Rankings">
-        <div class="cr-head">
-          <div class="cr-title-row">
-            <h2 class="cr-title">FRAG <strong>Class Rankings</strong></h2>
-            <span id="cr-credit" class="cr-credit"></span>
-          </div>
-          <p class="cr-sub">7 tiers · 5-star difficulty · Drag &amp; drop</p>
-          <div class="cr-controls">
-            <input id="cr-search" type="search" placeholder="Search class/spec…" autocomplete="off" />
-            <select id="cr-mode"></select>
-            <select id="cr-spec-filter">
-              <option>All Specs</option>
-              <option>Succession</option>
-              <option>Awakening</option>
-              <option>Ascension</option>
-            </select>
-            <button type="button" id="cr-add">+ Add Spec</button>
-            <button type="button" id="cr-download">Download PDF</button>
-            <button type="button" id="cr-import-btn">Import</button>
-            <input id="cr-import" hidden type="file" accept=".json" />
-          </div>
-        </div>
-        <section class="cr-pool-section" aria-label="All classes">
-          <div class="cr-pool-head">
-            <h3 class="cr-pool-title">All classes</h3>
-            <p class="cr-pool-sub">Drag specs into a tier below · scroll to browse</p>
-            <span id="cr-pool-count" class="cr-pool-count"></span>
-          </div>
-          <div id="cr-pool" class="cr-pool" data-tier="Unranked"></div>
-        </section>
-        <div id="cr-board" class="cr-board"></div>
-
-        <div id="cr-modal" class="cr-modal" aria-hidden="true">
-          <div id="cr-modal-backdrop" class="cr-modal-backdrop"></div>
-          <div class="cr-modal-box" role="dialog" aria-modal="true" aria-labelledby="cr-modal-title">
-            <h2 id="cr-modal-title">Edit Spec</h2>
-            <div class="cr-modal-grid">
-              <label>Class<input id="cr-fc" /></label>
-              <label>Spec
-                <select id="cr-fs"></select>
-              </label>
-            </div>
-            <label>Official image URL (optional)
-              <input id="cr-fi" placeholder="Direct official image URL" />
-            </label>
-            <p class="cr-modal-note">The card will use a generated placeholder until a direct artwork URL is supplied. Official class-page links are included on every card.</p>
-            <div class="cr-modal-grid">
-              <label>Mode
-                <select id="cr-fm"></select>
-              </label>
-              <label>Difficulty 0–5<input id="cr-fd" type="number" min="0" max="5" /></label>
-            </div>
-            <label>Roles<input id="cr-fr" placeholder="Frontline, Flex, Defense, Cannon" /></label>
-            <label>Notes<textarea id="cr-fn" rows="3"></textarea></label>
-            <h3>Performance scores</h3>
-            <div id="cr-scores" class="cr-modal-grid"></div>
-            <div class="cr-modal-actions">
-              <button type="button" class="cr-btn-primary" id="cr-save">Save</button>
-              <button type="button" class="cr-btn-secondary" id="cr-cancel">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="edania-chests-panel" class="edania-chests-panel panel" hidden aria-label="Edania II chest tracker">
+      <section id="edania-chests-panel" class="edania-chests-panel panel" aria-label="Edania II chest tracker">
         <div class="ect-head">
           <h2 class="ect-title">Edania II <strong>Agris Chest Tracker</strong></h2>
           <p class="ect-sub">Mark your Tachyon Traces and Legacy chests as you collect them. Progress stays saved on this device.</p>
@@ -269,7 +65,7 @@
             id="ect-map-frame"
             class="ect-map-frame"
             title="Edania II chest map"
-            src="edania-map.html?v=20260920c"
+            src="edania-map.html?v=20261114a"
             allow="fullscreen"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
@@ -284,31 +80,10 @@
           <button type="button" class="ect-btn" id="ect-reset">Reset Progress</button>
         </div>
         <section id="ect-cards" class="ect-cards" aria-label="Chest cards"></section>
-        <p class="ect-foot">FRAG · Edania II tracker · Data is stored only in this browser.</p>
+        <p class="ect-foot">Edania II tracker · Data is stored only in this browser.</p>
       </section>
-
-      <section id="bingo-book-panel" class="bingo-book-panel panel" hidden aria-label="FRAG Bingo Book blacklist ledger"></section>
-
-      <div id="stats-table-panel" class="table-scroll panel panel--table" role="region" aria-label="Node war statistics table">
-        <table>
-          <thead>
-            <tr id="thead"></tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-          <tfoot id="tfoot"></tfoot>
-        </table>
-      </div>
     </div>
 
-    <script src="site-auth.js?v=20260903c"></script>
-    <script src="guild.js?v=20260920c"></script>
-    <script src="data.js"></script>
-    <script src="siege-tickets.js"></script>
-    <script src="class-rankings-data.js"></script>
-    <script src="class-rankings.js?v=20260826a"></script>
-    <script src="edania-chests.js?v=20260902j"></script>
-    <script src="bingo-book-data.js"></script>
-    <script src="bingo-book.js?v=20260916a"></script>
-    <script src="app.js?v=20261004a"></script>
+    <script src="edania-chests.js?v=20261114a"></script>
   </body>
 </html>
